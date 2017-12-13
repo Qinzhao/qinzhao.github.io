@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iOS代码规范文档 - AllenQin的blog</title>
+    <meta name="author"  content="秦曌">
+    <meta name="description" content="iOS代码规范文档">
+    <meta name="keywords"  content="pop动画">
+    <!-- Open Graph -->
+    <meta property="og:title" content="iOS代码规范文档 - AllenQin的blog">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://localhost:4000/%E6%8A%80%E6%9C%AF/2017/12/10/new-theme-h2o.html">
+    <meta property="og:description" content="iOS开发者">
+    <meta property="og:site_name" content="AllenQin的blog">
+    <link rel="stylesheet" href="//cdn.staticfile.org/normalize/6.0.0/normalize.min.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_roc50gemkxpw4s4i.css">
+    <link rel="stylesheet" href="/assets/css/github-markdown.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+    <link rel="stylesheet" href="/assets/css/share.min.css">
+    <link rel="stylesheet" href="/assets/css/app.min.css">
+</head>
+<body>
+    <!--[if lt IE 10]>
+<div class="alert-danger" role="alert">你的浏览器实在太太太旧了，放学别走，升级完浏览器再说！<a target="_blank" class="alert-link" href="http://browsehappy.com">立即升级</a></div>
+<![endif]-->
+<input id="nm-switch" type="hidden" value="true">
+
+<header class="g-header">
+    <div class="g-logo">
+      <a href="/"></a>
+    </div>
+    <i id="menu-toggle" class="iconfont icon-menu"></i>
+    <nav class="g-nav">
+        <ul>
+            
+            <li><a href="/">home</a></li>
+            
+            <li><a href="/tags.html">tags</a></li>
+            
+        </ul>
+    </nav>
+</header>
+
+
+<header class="g-banner post-header post-pattern-food bgcolor-default " data-theme="default">
+    <div class="post-wrapper">
+        <div class="post-tags">
+            
+            
+            <a href="http://localhost:4000/tags#pop%E5%8A%A8%E7%94%BB" class="post-tag">pop动画</a>
+            
+            
+        </div>
+        <h1>iOS代码规范文档</h1>
+        <div class="post-meta">
+            <span class="post-meta-item"><i class="iconfont icon-author"></i><a href="http://localhost:4000" target="_blank" rel="author">秦曌</a></></span>
+            <time class="post-meta-item" datetime="17-12-10"><i class="iconfont icon-date"></i>10 Dec 2017</time>
+        </div>
+    </div>
+    
+    <div class="filter"></div>
+    <div class="post-cover" style="background: url('https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=75153069,1926417559&fm=27&gp=0.jpg') center no-repeat; background-size: cover;">
+    
+</header>
+
+<div class="post-content">
+    
+    <h2 class="post-subtitle">iOS代码规范文档</h2>
+    
+    <article class="markdown-body">
+        <blockquote>
+  <p>本文档用于长天资产iOS开发团队，希望团队成员能够认证查看以及遵守代码规范。便于开发以及以后的维护。</p>
+</blockquote>
+
+<h3 id="命名规范">命名规范</h3>
+
+<p>总的来说, iOS命名两大原则是:可读性高和防止命名冲突(通过加前缀来保证). Objective-C 的命名通常都比较长, 名称遵循驼峰式命名法. 一个好的命名标准很简单, 就是做到在开发者一看到名字时, 就能够懂得它的含义和使用方法. 另外, 每个模块都要加上自己的前缀, 前缀在编程接口中非常重要, 可以区分软件的功能范畴并防止不同文件或者类之间命名发生冲突, 比如相册模块(PhotoGallery)的代码都以PG作为前缀: PGAlbumViewController, PGDataManager.</p>
+<h4 id="1常量的命名">1、常量的命名</h4>
+<p>对于常量的命名最好在前面加上字母k作为标记. 如:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">static</span> <span class="k">const</span> <span class="n">NSTimeInterval</span> <span class="n">kAnimationDuration</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">;</span>
+</code></pre></div></div>
+<p>定义作为NSDictionary或者Notification等的Key值字符串时加上const关键字, 以防止被修改. 如:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">NSString</span> <span class="o">*</span><span class="k">const</span> <span class="n">UIApplicationDidEnterBackgroundNotification</span>
+</code></pre></div></div>
+
+<h3 id="4函数调用">4、函数调用</h3>
+<p>函数调用的格式和书写差不多，可以按照函数的长短来选择写在一行或者分成多行：</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//写在一行
+</span><span class="p">[</span><span class="n">myObject</span> <span class="n">doFooWith</span><span class="o">:</span><span class="n">arg1</span> <span class="n">name</span><span class="o">:</span><span class="n">arg2</span> <span class="n">error</span><span class="o">:</span><span class="n">arg3</span><span class="p">];</span>
+
+<span class="c1">//分行写，按照&amp;#039;:&amp;#039;对齐
+</span><span class="p">[</span><span class="n">myObject</span> <span class="n">doFooWith</span><span class="o">:</span><span class="n">arg1</span>
+               <span class="n">name</span><span class="o">:</span><span class="n">arg2</span>
+              <span class="n">error</span><span class="o">:</span><span class="n">arg3</span><span class="p">];</span>
+
+<span class="c1">//第一段名称过短的话后续可以进行缩进
+</span><span class="p">[</span><span class="n">myObj</span> <span class="kt">short</span><span class="o">:</span><span class="n">arg1</span>
+          <span class="n">longKeyword</span><span class="o">:</span><span class="n">arg2</span>
+    <span class="n">evenLongerKeyword</span><span class="o">:</span><span class="n">arg3</span>
+                <span class="n">error</span><span class="o">:</span><span class="n">arg4</span><span class="p">];</span>
+
+</code></pre></div></div>
+
+<p>以下写法是错误的：</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//错误，要么写在一行，要么全部分行
+</span><span class="p">[</span><span class="n">myObject</span> <span class="n">doFooWith</span><span class="o">:</span><span class="n">arg1</span> <span class="n">name</span><span class="o">:</span><span class="n">arg2</span>
+              <span class="n">error</span><span class="o">:</span><span class="n">arg3</span><span class="p">];</span>
+<span class="p">[</span><span class="n">myObject</span> <span class="n">doFooWith</span><span class="o">:</span><span class="n">arg1</span>
+               <span class="n">name</span><span class="o">:</span><span class="n">arg2</span> <span class="n">error</span><span class="o">:</span><span class="n">arg3</span><span class="p">];</span>
+
+<span class="c1">//错误，按照:来对齐，而不是关键字
+</span><span class="p">[</span><span class="n">myObject</span> <span class="n">doFooWith</span><span class="o">:</span><span class="n">arg1</span>
+          <span class="n">name</span><span class="o">:</span><span class="n">arg2</span>
+          <span class="n">error</span><span class="o">:</span><span class="n">arg3</span><span class="p">];</span>
+
+</code></pre></div></div>
+
+<h3 id="5协议protocols">5、协议（Protocols）</h3>
+<p>在书写协议的时候注意用&lt;&gt;括起来的协议和类型名之间是没有空格的，比如IPCConnectHandler()<IPCPreconnectorDelegate>,这个规则适用所有书写协议的地方，包括函数声明、类声明、实例变量等等：</IPCPreconnectorDelegate></p>
+
+<h3 id="书写规范">书写规范</h3>
+<p>编码规范简单来说就是为了保证写出来的代码具备三个原则:可复用, 易维护, 可扩展. 这其实也是面向对象的基本原则. 可复用, 简单来说就是不要写重复的代码, 有重复的部分要尽量封装起来重用. 否则修改文件的时候得满地找相同逻辑的地方…这个就用no zuo no die来描述吧, 哈哈…易维护, 就是不要把代码复杂化, 不要去写巨复杂逻辑的代码, 而是把复杂的逻辑代码拆分开一个个小的模块, 这也是Do one thing的概念, 每个模块(或者函数)职责要单一, 这样的代码会易于维护, 也不容易出错. 可扩展则是要求写代码时要考虑后面的扩展需求</p>
+<h3 id="1判断nil或者yesno">1、判断nil或者YES/NO</h3>
+<p>Preferred:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="n">someObject</span><span class="p">)</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">someObject</span><span class="p">)</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+</code></pre></div></div>
+<p>Not preferred:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="n">someObject</span> <span class="o">==</span> <span class="n">YES</span><span class="p">)</span> <span class="p">{</span> <span class="p">...}</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">someObject</span> <span class="o">!=</span> <span class="n">nil</span><span class="p">)</span> <span class="p">{</span> <span class="p">...}</span>
+</code></pre></div></div>
+<p>if (someObject == YES)容易误写成赋值语句, 自己给自己挖坑了…而且if (someObject)写法很简洁, 何乐而不为呢?</p>
+
+<h3 id="2-条件赋值">2、 条件赋值</h3>
+<p>Preferred:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">result</span> <span class="o">=</span> <span class="n">object</span> <span class="o">?</span> <span class="o">:</span> <span class="p">[</span><span class="n">self</span> <span class="n">createObject</span><span class="p">];</span>
+</code></pre></div></div>
+<p>Not preferred::</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">result</span> <span class="o">=</span> <span class="n">object</span> <span class="o">?</span> <span class="n">object</span> <span class="o">:</span> <span class="p">[</span><span class="n">self</span> <span class="n">createObject</span><span class="p">];</span>
+</code></pre></div></div>
+<p>如果是存在就赋值本身, 那就可以这样简写, 多简洁</p>
+
+<h3 id="3-初始化方法">3、 初始化方法</h3>
+<p>Preferred:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">NSArray</span> <span class="o">*</span><span class="n">names</span> <span class="o">=</span> <span class="err">@</span><span class="p">[</span><span class="err">@</span><span class="s">"Brian"</span><span class="p">,</span> <span class="err">@</span><span class="s">"Matt"</span><span class="p">,</span> <span class="err">@</span><span class="s">"Chris"</span><span class="p">,</span> <span class="err">@</span><span class="s">"Alex"</span><span class="p">,</span> <span class="err">@</span><span class="s">"Steve"</span><span class="p">];</span>
+<span class="n">NSDictionary</span> <span class="o">*</span><span class="n">productManagers</span> <span class="o">=</span> <span class="err">@</span><span class="p">{</span><span class="err">@</span><span class="s">"iPhone"</span> <span class="o">:</span> <span class="err">@</span><span class="s">"Kate"</span><span class="p">,</span> <span class="err">@</span><span class="s">"iPad"</span> <span class="o">:</span> <span class="err">@</span><span class="s">"Kamal"</span><span class="p">};</span>
+<span class="n">NSNumber</span> <span class="o">*</span><span class="n">shouldUseLiterals</span> <span class="o">=</span> <span class="err">@</span><span class="n">YES</span><span class="p">;</span>
+<span class="n">NSNumber</span> <span class="o">*</span><span class="n">buildingZIPCode</span> <span class="o">=</span> <span class="err">@</span><span class="mi">10018</span><span class="p">;</span>
+</code></pre></div></div>
+<p>第一个好处还是简洁, 第二个好处是可以防止初始化进去nil值造成crash</p>
+
+<h3 id="4-定义属性">4、 定义属性</h3>
+<p>Preferred:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">@</span><span class="n">property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">copy</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>
+</code></pre></div></div>
+<p>建议定义属性的时候把所有的参数写全, 尤其是如果想定义成只读的(防止外面修改)那一定要加上readonly, 这也是代码安全性的一个习惯.</p>
+
+<p>如果是内部使用的属性, 那么就定义成私有的属性(定义到.m的class extension里面)</p>
+
+<p>对于拥有Mutable子类型的对象(e.g. NSString, NSArray, NSDictionary)一定要定义成copy属性. Why? 示例: NSArray的array = NSMutableArray的mArray; 如果mArray在某个地方改变了, 那array也会跟着改变.</p>
+
+<p>尽量不要暴露mutable类型的对象在public interface, 建议在.h定义一个Inmutable类型的属性, 然后在.m的get函数里面返回一个内部定义的mutable变量.</p>
+
+<h3 id="5-bool赋值">5、 BOOL赋值</h3>
+<p>Preferred:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">BOOL</span> <span class="n">isAdult</span> <span class="o">=</span> <span class="n">age</span> <span class="o">&gt;</span> <span class="mi">18</span><span class="p">;</span>
+</code></pre></div></div>
+<p>Not preferred:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">BOOL</span> <span class="n">isAdult</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">age</span> <span class="o">&gt;</span> <span class="mi">18</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">isAdult</span> <span class="o">=</span> <span class="n">YES</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">else</span>
+<span class="p">{</span>
+    <span class="n">isAdult</span> <span class="o">=</span> <span class="n">NO</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h3 id="6-拒绝死值">6、 拒绝死值</h3>
+<p>Preferred:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="n">car</span> <span class="o">==</span> <span class="n">Car</span><span class="p">.</span><span class="n">Nissan</span><span class="p">)</span>
+<span class="n">or</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">adultAge</span> <span class="o">=</span> <span class="mi">18</span><span class="p">;</span> <span class="k">if</span> <span class="p">(</span><span class="n">age</span> <span class="o">&gt;</span> <span class="n">adultAge</span><span class="p">)</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+
+</code></pre></div></div>
+<p>Not preferred:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="n">carName</span> <span class="o">==</span> <span class="s">"Nissan"</span><span class="p">)</span>
+<span class="n">or</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">age</span> <span class="o">&gt;</span> <span class="mi">18</span><span class="p">)</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+<span class="k">else</span>
+<span class="p">{</span>
+    <span class="n">isAdult</span> <span class="o">=</span> <span class="n">NO</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>死值每次修改的时候容易被遗忘, 地方多了找起来就悲剧了. 而且定义成枚举或者static可以让错误发生在编译阶段. 另外仅仅看到一个数字, 完全不知道这个数字代表的意义.</p>
+
+<h3 id="7-复杂的条件判断">7、 复杂的条件判断</h3>
+
+<p>Preferred:</p>
+
+<h3 id="8嵌套判断">8、嵌套判断</h3>
+
+<p>Preferred:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">user</span><span class="p">.</span><span class="n">UserName</span><span class="p">)</span> <span class="k">return</span> <span class="n">NO</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">user</span><span class="p">.</span><span class="n">Password</span><span class="p">)</span> <span class="k">return</span> <span class="n">NO</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">user</span><span class="p">.</span><span class="n">Email</span><span class="p">)</span> <span class="k">return</span> <span class="n">NO</span><span class="p">;</span>
+
+<span class="k">return</span> <span class="n">YES</span><span class="p">;</span>
+</code></pre></div></div>
+<p>Not preferred:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">BOOL</span> <span class="n">isValid</span> <span class="o">=</span> <span class="n">NO</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="n">UserName</span><span class="p">)</span>
+<span class="p">{</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="n">Password</span><span class="p">)</span>
+    <span class="p">{</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="n">Email</span><span class="p">)</span> <span class="n">isValid</span> <span class="o">=</span> <span class="n">YES</span><span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+<span class="k">return</span> <span class="n">isValid</span><span class="p">;</span>
+</code></pre></div></div>
+<p>一旦发现某个条件不符合, 立即返回, 条理更清晰</p>
+
+<h3 id="9参数过多">9、参数过多</h3>
+
+<p>Preferred:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">registerUser</span><span class="p">(</span><span class="n">User</span> <span class="o">*</span><span class="n">user</span><span class="p">)</span>
+<span class="p">{</span>
+
+     <span class="c1">// to do...
+</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>Not preferred:</p>
+
+<p>一旦发现某个条件不符合, 立即返回, 条理更清晰</p>
+
+<h2 id="block的循环引用问题">Block的循环引用问题</h2>
+<p>Block确实是个好东西, 但是用起来一定要注意循环引用的问题,</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">__weak</span> <span class="n">typeof</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="n">weakSelf</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+<span class="n">dispatch_block_t</span> <span class="n">block</span> <span class="o">=</span>  <span class="o">^</span><span class="p">{</span>
+    <span class="p">[</span><span class="n">weakSelf</span> <span class="n">doSomething</span><span class="p">];</span> <span class="c1">// weakSelf != nil
+</span>    <span class="c1">// preemption, weakSelf turned nil
+</span>    <span class="p">[</span><span class="n">weakSelf</span> <span class="n">doSomethingElse</span><span class="p">];</span> <span class="c1">// weakSelf == nil
+</span><span class="p">};</span>
+</code></pre></div></div>
+
+<p>如此在上面定义一个weakSelf, 然后在block体里面使用该weakSelf就可以避免循环引用的问题. 那么问题来了…是不是这样就完全木有问题了? 很不幸, 答案是NO, 还是有问题。问题是block体里面的self是weak的, 所以就有可能在某一个时段self已经被释放了, 这时block体里面再使用self那就是nil</p>
+
+<p>2.在一个自定义的View中,或者自定义cell中,modal出一个控制器建议:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">UIApplication</span> <span class="n">sharedApplication</span><span class="p">].</span><span class="n">keyWindow</span><span class="p">.</span><span class="n">rootViewController</span>
+</code></pre></div></div>
+<p>3、建议:用CGSizeZero 代替 CGSizeMake(0,0);CGRectZero代替CGRectMake(0, 0, 0, 0);CGPointZero代替CGPointMake(0, 0)</p>
+
+<h2 id="关于我们的项目快车财富">关于我们的项目(快车财富)</h2>
+<p>我们的项目基于MVC的框架，采用cocoaPad的第三方管理平台。</p>
+<h3 id="1mvc特征">1、MVC特征</h3>
+<p>1）Modal 模型对象：</p>
+
+<p>模型对象封装了应用程序的数据，并定义操控和处理该数据的逻辑和运算。例如，模型对象可能是表示商品数据 list。用户在视图层中所进行的创建或修改数据的操作，通过控制器对象传达出去，最终会创建或更新模型对象。模型对象更改时（例如通过网络连接接收到新数据），它通知控制器对象，控制器对象更新相应的视图对象。
+2）View 视图对象：</p>
+
+<p>视图对象是应用程序中用户可以看见的对象。视图对象知道如何将自己绘制出来，可能对用户的操作作出响应。视图对象的主要目的就是显示来自应用程序模型对象的数据，并使该数据可被编辑。尽管如此，在 MVC 应用程序中，视图对象通常与模型对象分离。</p>
+
+<p>在iOS应用程序开发中，所有的控件、窗口等都继承自 UIView，对应 MVC 中的 V。UIView 及其子类主要负责 UI 的实现，而 UIView 所产生的事件都可以采用委托的方式，交给 UIViewController 实现。</p>
+
+<p>3）Controller 控制器对象：</p>
+
+<p>在应用程序的一个或多个视图对象和一个或多个模型对象之间，控制器对象充当媒介。控制器对象因此是同步管道程序，通过它，视图对象了解模型对象的更改，反之亦然。控制器对象还可以为应用程序执行设置和协调任务，并管理其他对象的生命周期。</p>
+
+<p>控制器对象解释在视图对象中进行的用户操作，并将新的或更改过的数据传达给模型对象。模型对象更改时，一个控制器对象会将新的模型数据传达给视图对象，以便视图对象可以显示它。</p>
+
+<p>对于不同的 UIView，有相应的 UIViewController，对应 MVC 中的 C。例如在 iOS 上常用的 UITableView，它所对应的 Controller 就是UITableViewController。</p>
+
+<h3 id="2cocoapod">2、cocoaPod</h3>
+<p>1、iOS开发时，项目中会引用许多第三方库，CocoaPods（https://github.com/CocoaPods/CocoaPods）可以用来方便的统一管理这些第三方库。
+2、pod使用，可自行百度。通过命令行，可进行安装和使用。方法可查看该链接
+（http://blog.csdn.net/showhilllee/article/details/38398119/）</p>
+<h3 id="快车财富的框架">快车财富的框架</h3>
+<p><img src="media/14837809856167/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-01-12%20%E4%B8%8B%E5%8D%883.31.46.png" alt="屏幕快照 2017-01-12 下午3.31.46" />
+1) App目录：里面就是放了AppDelegate.h和AppDelegate.m文件，另起文件夹保留目录层级；
+2) category目录：放入iOS的类目，以及扩展方法
+3) config目录：放入配置，比如版本号，比如接口域名，以及使用第三方平台的key以及Secret
+4) baseclassess目录：放入父类，可以继承使用；
+5) api目录：接口的请求；
+6) utils目录：工具类，比如时间解析，加密工具；
+7) Modules目录：放入ViewController,view,model,里面再按照首页，理财，我的财富，更多进行区分；
+8) ThildParts目录：第三方的代码，可以自己修改；
+9) pod目录：通过pod使用的第三方平台，不能够修改</p>
+
+<h3 id="快车财富在我的眼中的功能">快车财富在我的眼中的功能：</h3>
+
+<p>1）调用网络API。
+我们目前使用AFNetWorking的网络获取框架，目前github star是 28000.链接https://github.com/AFNetworking/AFNetworking  让我们开发更简单。</p>
+
+<p>2）页面展示
+页面很好的组织，才能尽可能降低业务方代码的耦合度，尽可能降低业务方开发界面的复杂度，提高软件的效率，不卡顿。这是开发经验决定了，我认为app开发和前端开发还是有很大的区别的，我们必须考虑到内存的释放问题。这个就不多做解释了</p>
+
+<p>3）数据的本地持久化。
+本地持久化，我们这边这样的，用户登陆的后，我们会储存用户的基本信息。从而让下次启动时候，直接登陆。 当没网的情况下，我们获取接口的缓存。但是，暂时还没加入预加载功能，下次更新的时候，会多某些页面实现预加载。</p>
+
+<p>4）动态部署方案。
+因为苹果审核周期很长，我记得最开始的时候 是一周以上，甚至是半个月，所以动态部署也对我们很重要。这个 bang大神的jspath平台就是一个很好的动态部署平台。这是通过js语言编写的。但是我不提倡通过js来部署页面，建议用来修改bug.我们1.6.5以及1.6.4版本的几个崩溃bug，我采用jspath修复的，来降低软件的崩溃率。还是显而易见的。</p>
+
+
+    </article>
+    
+    <div class="social-share-wrapper">
+        <div class="social-share"></div>
+    </div>
+    
+</div>
+
+<section class="author-detail">
+    <section class="post-footer-item author-card">
+        <div class="avatar">
+            <img src="http://localhost:4000/assets/img/profile.jpg" alt="">
+        </div>
+        <div class="author-name" rel="author">秦曌</div>
+        <div class="bio">
+            <p>iOS开发者，学习后端</p>
+        </div>
+        
+        <ul class="sns-links">
+            
+            <li>
+                <a href="//weibo.com/2201464230/profile?rightmod=1&wvr=6&mod=personinfo" target="_blank">
+                    <i class="iconfont icon-weibo"></i>
+                </a>
+            </li>
+            
+            <li>
+                <a href="//github.com/Qinzhao" target="_blank">
+                    <i class="iconfont icon-github"></i>
+                </a>
+            </li>
+            
+        </ul>
+        
+    </section>
+    <section class="post-footer-item read-next">
+        
+        <div class="read-next-item">
+            <a href="/2017/12/13/hello-jekyll.html" class="read-next-link"></a>
+            <section>
+                <span>pop动画开发</span>
+                <p>  动画在APP开发过程中，大家多多少少都会接触到，而且随着iOS7的扁平化风格启用之后，越来越多的APP开始尝试...</p>
+            </section>
+            
+            <div class="filter"></div>
+            <img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1191204864,115906393&fm=27&gp=0.jpg" alt="">
+            
+        </div>
+        
+        
+    </section>
+    
+</section>
+
+<footer class="g-footer">
+    <section>AllenQin的blog © 2017</section>
+    <section>Powered by <a href="//jekyllrb.com">Jekyll</a> | <a href="https://github.com/kaeyleo/jekyll-theme-H2O">Theme H2O</a></section>
+</footer>
+
+<script src="/assets/js/social-share.min.js"></script>
+<script>
+    socialShare('.social-share', {
+        sites: ['wechat','weibo'],
+        wechatQrcodeTitle: "分享到微信朋友圈",
+        wechatQrcodeHelper: '<p>扫码后点击右上角</p><p>将本文分享至朋友圈</p>'
+    });
+</script>
+<script>
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+/*写入自己的disqus信息*/
+s.src = 'https://liaokeyu.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+<script src="/assets/js/prism.js"></script>
+<script src="/assets/js/index.min.js"></script>
+</body>
+</html>

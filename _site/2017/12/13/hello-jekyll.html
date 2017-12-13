@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pop动画开发 - AllenQin的blog</title>
+    <meta name="author"  content="秦曌">
+    <meta name="description" content="pop动画开发">
+    <meta name="keywords"  content="pop动画">
+    <!-- Open Graph -->
+    <meta property="og:title" content="pop动画开发 - AllenQin的blog">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://localhost:4000/2017/12/13/hello-jekyll.html">
+    <meta property="og:description" content="iOS开发者">
+    <meta property="og:site_name" content="AllenQin的blog">
+    <link rel="stylesheet" href="//cdn.staticfile.org/normalize/6.0.0/normalize.min.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_roc50gemkxpw4s4i.css">
+    <link rel="stylesheet" href="/assets/css/github-markdown.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+    <link rel="stylesheet" href="/assets/css/share.min.css">
+    <link rel="stylesheet" href="/assets/css/app.min.css">
+</head>
+<body>
+    <!--[if lt IE 10]>
+<div class="alert-danger" role="alert">你的浏览器实在太太太旧了，放学别走，升级完浏览器再说！<a target="_blank" class="alert-link" href="http://browsehappy.com">立即升级</a></div>
+<![endif]-->
+<input id="nm-switch" type="hidden" value="true">
+
+<header class="g-header">
+    <div class="g-logo">
+      <a href="/"></a>
+    </div>
+    <i id="menu-toggle" class="iconfont icon-menu"></i>
+    <nav class="g-nav">
+        <ul>
+            
+            <li><a href="/">home</a></li>
+            
+            <li><a href="/tags.html">tags</a></li>
+            
+        </ul>
+    </nav>
+</header>
+
+
+<header class="g-banner post-header post-pattern-food bgcolor-default " data-theme="default">
+    <div class="post-wrapper">
+        <div class="post-tags">
+            
+            
+            <a href="http://localhost:4000/tags#pop%E5%8A%A8%E7%94%BB" class="post-tag">pop动画</a>
+            
+            
+        </div>
+        <h1>pop动画开发</h1>
+        <div class="post-meta">
+            <span class="post-meta-item"><i class="iconfont icon-author"></i><a href="http://localhost:4000" target="_blank" rel="author">简书</a></></span>
+            <time class="post-meta-item" datetime="17-12-13"><i class="iconfont icon-date"></i>13 Dec 2017</time>
+        </div>
+    </div>
+    
+    <div class="filter"></div>
+    <div class="post-cover" style="background: url('https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1191204864,115906393&fm=27&gp=0.jpg') center no-repeat; background-size: cover;">
+    
+</header>
+
+<div class="post-content">
+    
+    <article class="markdown-body">
+        <blockquote>
+  <p>动画在APP开发过程中，大家多多少少都会接触到，而且随着iOS7的扁平化风格启用之后，越来越多的APP开始尝试加入各种绚丽的动画交互效果以增加APP的用户体验。(当然，还是以国外的APP居多)
+有过相关开发经验的同学肯定知道在iOS中，动画相关的部分都是基于Core Animation，但是今天我们不讨论Core Animation。今天的主角是POP -来自于Facebook的动画引擎(其实我不喜欢把POP定义为动画引擎 我愿意称它为函数发生器)</p>
+</blockquote>
+
+<h3 id="介绍">介绍</h3>
+
+<p>官方介绍(翻译版)</p>
+
+<p>POP是一个在iOS与OS X上通用的极具扩展性的动画引擎。它在基本的静态动画的基础上增加的弹簧动画与衰减动画，使之能创造出更真实更具物理性的交互动画。POP的API可以快速的与现有的ObjC代码集成并可以作用于任意对象的任意属性。</p>
+
+<p>POP是个相当成熟且久经考验的框架，Facebook出品的令人惊叹的Paper应用中的所有动画和效果即出自POP。</p>
+
+<p>安装方式还是推荐使用CocoaPod。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="n">pod</span> <span class="err">'</span><span class="n">pop</span><span class="err">'</span><span class="p">,</span> <span class="err">'</span><span class="o">~&gt;</span> <span class="mf">1.0</span><span class="err">'</span>
+</code></pre></div></div>
+<p>POP的神奇之处在于，它是独立与Core Animation的存在。所以，忘记Core Animation吧，忘记Layer Tree吧，迎接一个简单的明天！(LOL 开玩笑的~:) 很多地方还是会需要Core Animation的，不过说不定哪天苹果大发善心，将动画相关的部分向POP借鉴一点也不是不可能的(比如SpriteKit就借鉴了Cocos2D :)</p>
+
+<h3 id="使用">使用</h3>
+
+<p>POP默认支持三种动画，但同时也支持自定义动画。</p>
+
+<p>POPBasicAnimation</p>
+
+<p>POPSpringAnimation</p>
+
+<p>POPDecayAnimation</p>
+
+<p>POPCustomAnimation //自定义动画</p>
+
+<p>这里我们只讨论前三种(因为自定义动画我也没用过 :) 先来看看官方的示例代码吧。</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//Basic animations can be used to interpolate values over a specified time period. To use an ease-in ease-out animation to animate a view's alpha from 0.0 to 1.0 over the default duration:
+</span><span class="n">POPBasicAnimation</span> <span class="o">*</span><span class="n">anim</span> <span class="o">=</span> <span class="p">[</span><span class="n">POPBasicAnimation</span> <span class="n">animationWithPropertyNamed</span><span class="o">:</span><span class="n">kPOPViewAlpha</span><span class="p">];</span>
+<span class="n">anim</span><span class="p">.</span><span class="n">fromValue</span> <span class="o">=</span> <span class="err">@</span><span class="p">(</span><span class="mf">0.0</span><span class="p">);</span>
+<span class="n">anim</span><span class="p">.</span><span class="n">toValue</span> <span class="o">=</span> <span class="err">@</span><span class="p">(</span><span class="mf">1.0</span><span class="p">);</span>
+<span class="p">[</span><span class="n">view</span> <span class="n">pop_addAnimation</span><span class="o">:</span><span class="n">anim</span> <span class="n">forKey</span><span class="o">:</span><span class="err">@</span><span class="s">"fade"</span><span class="p">];</span>
+<span class="c1">//Spring animations can be used to give objects a delightful bounce. In this example, we use a spring animation to animate a layer's bounds from its current value to (0, 0, 400, 400):
+</span><span class="n">POPSpringAnimation</span> <span class="o">*</span><span class="n">anim</span> <span class="o">=</span> <span class="p">[</span><span class="n">POPSpringAnimation</span> <span class="n">animationWithPropertyNamed</span><span class="o">:</span><span class="n">kPOPLayerBounds</span><span class="p">];</span>
+<span class="n">anim</span><span class="p">.</span><span class="n">toValue</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSValue</span> <span class="n">valueWithCGRect</span><span class="o">:</span><span class="n">CGRectMake</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">400</span><span class="p">)];</span>
+<span class="p">[</span><span class="n">layer</span> <span class="n">pop_addAnimation</span><span class="o">:</span><span class="n">anim</span> <span class="n">forKey</span><span class="o">:</span><span class="err">@</span><span class="s">"size"</span><span class="p">];</span>
+<span class="c1">//Decay animations can be used to gradually slow an object to a halt. In this example, we decay a layer's positionX from it's current value and velocity 1000pts per second:
+</span><span class="n">POPDecayAnimation</span> <span class="o">*</span><span class="n">anim</span> <span class="o">=</span> <span class="p">[</span><span class="n">POPDecayAnimation</span> <span class="n">animationWithPropertyNamed</span><span class="o">:</span><span class="n">kPOPLayerPositionX</span><span class="p">];</span>
+<span class="n">anim</span><span class="p">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="err">@</span><span class="p">(</span><span class="mf">1000.</span><span class="p">);</span>
+<span class="p">[</span><span class="n">layer</span> <span class="n">pop_addAnimation</span><span class="o">:</span><span class="n">anim</span> <span class="n">forKey</span><span class="o">:</span><span class="err">@</span><span class="s">"slide"</span><span class="p">];</span>
+</code></pre></div></div>
+
+<h3 id="popspringanimation">POPSpringAnimation</h3>
+<p>POPSpringAnimation也许是大多数人使用POP的理由，其提供一个类似弹簧一般的动画效果(使用后，APP立马就活泼起来了，有木有?!)</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">POPSpringAnimation</span> <span class="o">*</span><span class="n">anSpring</span> <span class="o">=</span> <span class="p">[</span><span class="n">POPSpringAnimation</span> <span class="n">animationWithPropertyNamed</span><span class="o">:</span><span class="n">kPOPLayerPositionX</span><span class="p">];</span>
+<span class="n">anSpring</span><span class="p">.</span><span class="n">toValue</span> <span class="o">=</span> <span class="err">@</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">square</span><span class="p">.</span><span class="n">center</span><span class="p">.</span><span class="n">y</span><span class="o">+</span><span class="mi">300</span><span class="p">);</span>
+<span class="n">anSpring</span><span class="p">.</span><span class="n">beginTime</span> <span class="o">=</span> <span class="n">CACurrentMediaTime</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1.0</span><span class="n">f</span><span class="p">;</span>
+<span class="n">anSpring</span><span class="p">.</span><span class="n">springBounciness</span> <span class="o">=</span> <span class="mf">10.0</span><span class="n">f</span><span class="p">;</span>
+<span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">square</span> <span class="n">pop_addAnimation</span><span class="o">:</span><span class="n">anSpring</span> <span class="n">forKey</span><span class="o">:</span><span class="err">@</span><span class="s">"position"</span><span class="p">];</span>
+</code></pre></div></div>
+<p>POPSpringAnimation可配置的属性与默认值为</p>
+
+<p>springBounciness:4.0    //[0-20] 弹力 越大则震动幅度越大
+springSpeed     :12.0   //[0-20] 速度 越大则动画结束越快
+dynamicsTension :0      //拉力  接下来这三个都跟物理力学模拟相关 数值调整起来也很费时 没事不建议使用哈
+dynamicsFriction:0      //摩擦 同上
+dynamicsMass    :0      //质量 同上</p>
+
+<p>注意:POPSpringAnimation是没有duration字段的，其动画持续时间由以上几个参数决定</p>
+
+<p>###小结</p>
+
+<p>其实只需要熟练掌握POP自带的三种动画，即可完成大部分的动画效果。如果实在是无法满足你的需求的话，自定义动画也基本可以满足你的要求。可以说POP化繁为简的出现，极大的方便了我们这些苦逼的coder。(http://www.cocoachina.com/ios/20150728/12734.html)</p>
+
+<p>当然，就像我说的，POP不仅仅是一个动画引擎。相信经过我最后一个例子，大家可以得到一点启示，POP能做的事情还不少 :)</p>
+
+    </article>
+    
+    <div class="social-share-wrapper">
+        <div class="social-share"></div>
+    </div>
+    
+</div>
+
+<section class="author-detail">
+    <section class="post-footer-item author-card">
+        <div class="avatar">
+            <img src="http://localhost:4000/assets/img/profile.jpg" alt="">
+        </div>
+        <div class="author-name" rel="author">秦曌</div>
+        <div class="bio">
+            <p>iOS开发者，学习后端</p>
+        </div>
+        
+        <ul class="sns-links">
+            
+            <li>
+                <a href="//weibo.com/2201464230/profile?rightmod=1&wvr=6&mod=personinfo" target="_blank">
+                    <i class="iconfont icon-weibo"></i>
+                </a>
+            </li>
+            
+            <li>
+                <a href="//github.com/Qinzhao" target="_blank">
+                    <i class="iconfont icon-github"></i>
+                </a>
+            </li>
+            
+        </ul>
+        
+    </section>
+    <section class="post-footer-item read-next">
+        
+        
+        <div class="read-next-item">
+            <a href="/%E6%8A%80%E6%9C%AF/2017/12/10/new-theme-h2o.html" class="read-next-link"></a>
+            <section>
+                <span>iOS代码规范文档</span>
+                <p>  本文档用于长天资产iOS开发团队，希望团队成员能够认证查看以及遵守代码规范。便于开发以及以后的维护。</p>
+            </section>
+            
+            <div class="filter"></div>
+            <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=75153069,1926417559&fm=27&gp=0.jpg" alt="">
+            
+        </div>
+        
+    </section>
+    
+</section>
+
+<footer class="g-footer">
+    <section>AllenQin的blog © 2017</section>
+    <section>Powered by <a href="//jekyllrb.com">Jekyll</a> | <a href="https://github.com/kaeyleo/jekyll-theme-H2O">Theme H2O</a></section>
+</footer>
+
+<script src="/assets/js/social-share.min.js"></script>
+<script>
+    socialShare('.social-share', {
+        sites: ['wechat','weibo'],
+        wechatQrcodeTitle: "分享到微信朋友圈",
+        wechatQrcodeHelper: '<p>扫码后点击右上角</p><p>将本文分享至朋友圈</p>'
+    });
+</script>
+<script>
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+/*写入自己的disqus信息*/
+s.src = 'https://liaokeyu.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+<script src="/assets/js/prism.js"></script>
+<script src="/assets/js/index.min.js"></script>
+</body>
+</html>
